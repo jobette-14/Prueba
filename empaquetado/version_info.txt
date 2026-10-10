@@ -1,0 +1,28 @@
+# Version metadata para el ejecutable de Windows (PyInstaller).
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(1, 1, 0, 0),
+    prodvers=(1, 1, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+  ),
+  kids=[
+    StringFileInfo([
+      StringTable(
+        '040a04b0',
+        [StringStruct('CompanyName', 'ElectroPredict'),
+         StringStruct('FileDescription', 'ElectroPredict - Predictor de Consumo Electrico'),
+         StringStruct('FileVersion', '1.1.0'),
+         StringStruct('InternalName', 'ElectroPredict'),
+         StringStruct('LegalCopyright', 'ElectroPredict'),
+         StringStruct('OriginalFilename', 'ElectroPredict.exe'),
+         StringStruct('ProductName', 'ElectroPredict'),
+         StringStruct('ProductVersion', '1.1.0')])
+    ]),
+    VarFileInfo([VarStruct('Translation', [1034, 1200])])
+  ]
+)

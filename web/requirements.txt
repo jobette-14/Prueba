@@ -1,0 +1,10 @@
+# Dependencias de la API web de ElectroPredict.
+# El nucleo compartido (modelo, datos, base_datos, reportes) reutiliza las
+# dependencias de la aplicacion de escritorio.
+-r ../requirements.txt
+
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+python-multipart>=0.0.9
+slowapi>=0.1.9
+httpx>=0.27.0

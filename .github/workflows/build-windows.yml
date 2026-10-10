@@ -1,0 +1,41 @@
+name: Build Windows (EXE + instalador)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  windows:
+    name: Empaquetar aplicacion de escritorio
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt "pyinstaller>=6.0"
+
+      - name: Compilar ElectroPredict.exe
+        run: python -m PyInstaller --clean --noconfirm empaquetado/electropredict.spec
+
+      - name: Instalar Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Compilar instalador
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" empaquetado\instalador.iss'
+
+      - name: Subir artefactos
+        uses: actions/upload-artifact@v4
+        with:
+          name: ElectroPredict-Windows
+          path: |
+            dist/ElectroPredict.exe
+            empaquetado/dist/ElectroPredict-Setup-*.exe
+          if-no-files-found: error

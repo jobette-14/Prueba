@@ -1,0 +1,35 @@
+# Render Blueprint para desplegar la API + frontend de ElectroPredict.
+# Documentacion: https://render.com/docs/blueprint-spec
+#
+# Uso:
+#   1. Sube el repositorio a GitHub.
+#   2. En Render: New + -> Blueprint -> selecciona el repositorio.
+#   3. Render pedira los valores de las variables marcadas con sync:false.
+#      Esas variables (secretos) NUNCA van en el repositorio.
+
+services:
+  - type: web
+    name: electropredict
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/salud
+    envVars:
+      - key: ENTORNO
+        value: produccion
+      # Secreto: URL de Neon (postgresql://...). Se define en el panel de Render.
+      - key: DATABASE_URL
+        sync: false
+      # Secreto: clave para proteger las rutas de escritura.
+      - key: ELECTROPREDICT_API_KEY
+        generateValue: true
+      # Dominios permitidos por CORS (tu dominio de Render).
+      - key: CORS_ORIGINS
+        sync: false
+      - key: RATE_LIMIT
+        value: 120/minute
+      # Chat IA (opcional).
+      - key: CHAT_API_KEY
+        sync: false
+      - key: CHAT_MODEL
+        value: gpt-4o-mini

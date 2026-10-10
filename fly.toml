@@ -1,0 +1,31 @@
+# Configuracion para Fly.io (alternativa de hosting de la API).
+# Documentacion: https://fly.io/docs/reference/configuration/
+#
+# Uso:
+#   fly launch --no-deploy        (genera/ajusta este archivo)
+#   fly secrets set DATABASE_URL="postgresql://..."
+#   fly secrets set ELECTROPREDICT_API_KEY="..."
+#   fly secrets set CORS_ORIGINS="https://tu-dominio"
+#   fly deploy
+
+app = "electropredict"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  ENTORNO = "produccion"
+  RATE_LIMIT = "120/minute"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512
